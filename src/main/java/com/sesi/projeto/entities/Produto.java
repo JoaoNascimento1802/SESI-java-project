@@ -69,4 +69,13 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
+	public String getIma_url() {
+		return ima_url;
+	}
+
+	public void setIma_url(String ima_url) {
+		this.ima_url = ima_url;
+	}
+
+
 }
