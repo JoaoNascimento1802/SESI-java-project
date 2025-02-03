@@ -18,6 +18,7 @@ public class Produto {
 	private String nome;
 	private double preco;
 	private String descricao;
+	private String ima_url;
 
 	public Produto() {
 
