@@ -2,6 +2,9 @@
 
     import jakarta.persistence.*;
 
+    import java.util.ArrayList;
+    import java.util.List;
+
     @Entity
     @Table(name = "tb_user")
     public class User {
@@ -14,6 +17,11 @@
         private String senha;
         private String telefone;
         private String roles;
+
+
+        @OneToMany(mappedBy = "cliente")  // "cliente" precisa ser o nome do atributo no Pedido
+        private List<Pedido> pedidos;
+
 
         public User() {
         }

@@ -8,6 +8,11 @@ import java.time.Instant;
 @Table(name = "tb_pagamentos")
 public class Pagamento {
 
+
+    @OneToOne
+    @MapsId
+    private Pedido pedido;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

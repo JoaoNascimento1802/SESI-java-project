@@ -14,6 +14,11 @@ public class Pedido {
 
     Instant momento;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id") // Nome da coluna no banco de dados
+    private User cliente; // Este campo de
+
+
     private StatusDoPedido status;
 
     public Pedido() {

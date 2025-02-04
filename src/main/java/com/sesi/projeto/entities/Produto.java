@@ -2,11 +2,10 @@ package com.sesi.projeto.entities;
 
 import com.sesi.projeto.dto.ProdutoDTO;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_produto")
@@ -23,6 +22,12 @@ public class Produto {
 	public Produto() {
 
 	}
+
+	@ManyToMany
+	@JoinTable(name = "tb_produto_categoria",
+	joinColumns = @JoinColumn(name = "produto_id"),
+	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private Set<Categoria> categorias = new HashSet<>();
 
 	public Produto(ProdutoDTO d) {
 		this.nome = d.nome();
