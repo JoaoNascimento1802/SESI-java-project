@@ -1,6 +1,6 @@
 package com.sesi.projeto.controllers;
 
-import com.sesi.projeto.entities.User;
+import com.sesi.projeto.entities.Usuario;
 import com.sesi.projeto.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,23 +17,23 @@ public class UserController {
     UserRepository repo;
 
     @GetMapping
-    public ResponseEntity<List<User>> listarTodos() {
+    public ResponseEntity<List<Usuario>> listarTodos() {
         return ResponseEntity.ok(repo.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        Optional<User> user = repo.findById(id);
+        Optional<Usuario> user = repo.findById(id);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<User> criar(@RequestBody User user) {
+    public ResponseEntity<Usuario> criar(@RequestBody Usuario user) {
         return ResponseEntity.ok(repo.save(user));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Usuario user) {
         if (repo.existsById(id)) {
             user.setId(id);
             return ResponseEntity.ok(repo.save(user));

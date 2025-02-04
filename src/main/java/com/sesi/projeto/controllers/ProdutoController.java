@@ -45,7 +45,7 @@ public class ProdutoController {
 			produto.setNome(dto.nome());
 			produto.setPreco(dto.preco());
 			produto.setDescricao(dto.descricao());
-			produto.setIma_url(dto.ima_url());
+			produto.setImgUrl(dto.imgUrl());
 
 			repo.save(produto);
 			return ResponseEntity.ok(produto);

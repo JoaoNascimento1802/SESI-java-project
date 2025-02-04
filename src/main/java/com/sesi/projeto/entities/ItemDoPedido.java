@@ -1,24 +1,52 @@
 package com.sesi.projeto.entities;
 
+import com.sesi.projeto.dto.ItemDoPedidoDTO;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "tb_pedido")
+@Table(name = "tb_item_pedido")
 public class ItemDoPedido {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    private int quantidade;
+    @EmbeddedId
+    private ItemDoPedidoPK id = new ItemDoPedidoPK();
 
     private Double preco;
+    private int  quantidade;
+
+    public ItemDoPedido(Pedido pedido, Produto produto, int quantidade, Double preco) {
+        id.setPedido(pedido);
+        id.setProduto(produto);
+        this.quantidade = quantidade;
+        this.preco = preco;
+
+    }
 
     public ItemDoPedido() {
     }
 
-    public ItemDoPedido(int quantidade, Double preco) {
-        this.quantidade = quantidade;
+    public ItemDoPedido(ItemDoPedidoDTO dtoitempedido){
+        this.quantidade = dtoitempedido.quantidade();
+        this.preco = dtoitempedido.preco();
+    }
+
+    public Pedido getPedido(){
+        return id.getPedido();
+    }
+
+    public  void setPedido(Pedido pedido){
+        id.setPedido(pedido);
+    }
+
+
+    public ItemDoPedidoPK getId() {
+        return id;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
@@ -30,11 +58,17 @@ public class ItemDoPedido {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco() {
-        return preco;
+    public void setId(ItemDoPedidoPK id) {
+        this.id = id;
     }
 
-    public void setPreco(Double preco) {
-        this.preco = preco;
+    public Produto getProduto(){
+        return id.getProduto();
     }
+
+    public void setProduto(Produto produto){
+        id.setProduto(produto);
+    }
+
+
 }

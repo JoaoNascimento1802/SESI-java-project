@@ -3,8 +3,10 @@ package com.sesi.projeto.entities;
 import com.sesi.projeto.dto.ProdutoDTO;
 
 import jakarta.persistence.*;
+import jdk.dynalink.linker.LinkerServices;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,29 +19,41 @@ public class Produto {
 	private String nome;
 	private double preco;
 	private String descricao;
-	private String ima_url;
+	private String imgUrl;
+
+	@ManyToMany
+	@JoinTable(name = "tb_produto_categoria",
+			joinColumns = @JoinColumn(name = "produto_id"),
+			inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private Set<Categoria> categorias = new HashSet<>();
+
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemDoPedido> itens = new HashSet<>();
+	public Set<ItemDoPedido> getItens(){
+		return itens;
+	}
+
+	public List<Pedido> getPedido(){
+		return itens.stream().map(x -> x.getPedido()).toList();
+	}
 
 	public Produto() {
 
 	}
 
-	@ManyToMany
-	@JoinTable(name = "tb_produto_categoria",
-	joinColumns = @JoinColumn(name = "produto_id"),
-	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-	private Set<Categoria> categorias = new HashSet<>();
-
 	public Produto(ProdutoDTO d) {
 		this.nome = d.nome();
 		this.preco = d.preco();
 		this.descricao = d.descricao();
+		this.imgUrl = d.imgUrl();
 	}
 
-	public Produto(Long id, String nome, double preco, String descricao) {
+	public Produto(Long id, String nome, double preco, String descricao, String imgUrl) {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 		this.descricao = descricao;
+		this.imgUrl = imgUrl;
 	}
 
 	public Long getId() {
@@ -74,13 +88,11 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public String getIma_url() {
-		return ima_url;
+	public String getImgUrl() {
+		return imgUrl;
 	}
 
-	public void setIma_url(String ima_url) {
-		this.ima_url = ima_url;
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
-
-
 }

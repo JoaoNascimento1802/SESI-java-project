@@ -4,5 +4,5 @@ import com.sesi.projeto.entities.StatusDoPedido;
 
 import java.time.Instant;
 
-public record PedidoDTO(Instant moment, StatusDoPedido status) {
+public record PedidoDTO(Instant momento, StatusDoPedido status) {
 }
